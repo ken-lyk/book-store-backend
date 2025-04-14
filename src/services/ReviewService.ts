@@ -4,7 +4,7 @@ import { Book } from '../entities/Book';
 import { User, UserRole } from '../entities/User';
 import { AppError } from '../utils/AppError';
 import { CreateReviewInput, UpdateReviewInput, ListReviewsQuery } from '../validators/reviewValidators'; // Assuming types exported
-import { Repository, FindManyOptions, FindOneOptions, FindOptionsWhere } from 'typeorm';
+import { Repository, FindOneOptions, FindOptionsWhere } from 'typeorm';
 
 // Type for authenticated user data passed to service methods
 type AuthenticatedUser = {

@@ -1,7 +1,6 @@
 import { AppDataSource } from '../config/data-source';
 import { Book } from '../entities/Book';
 import { Author } from '../entities/Author';
-import { Review } from '../entities/Review';
 import { AppError } from '../utils/AppError';
 import { CreateBookInput, UpdateBookInput } from '../validators/bookValidators'; // Assuming types exported
 import { Repository, In, FindManyOptions, FindOneOptions } from 'typeorm';

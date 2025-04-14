@@ -35,7 +35,7 @@ export class AuthService {
 
         await this.userRepository.save(newUser);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const { password: _, ...userWithoutPassword } = newUser;
         return userWithoutPassword;
     }
@@ -65,7 +65,7 @@ export class AuthService {
         const tokenPayload: JwtPayload = { id: user.id, role: user.role };
         const token = generateToken(tokenPayload);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const { password: _, ...userWithoutPassword } = user;
         return { user: userWithoutPassword, token };
     }
@@ -75,7 +75,7 @@ export class AuthService {
         if (!user) {
             return null;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const { password: _, ...userWithoutPassword } = user;
         return userWithoutPassword;
     }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken, JwtPayload } from '../utils/jwtUtils';
+import { verifyToken } from '../utils/jwtUtils';
 import { AppDataSource } from '../config/data-source';
 import { User, UserRole } from '../entities/User';
 import { AppError } from '../utils/AppError';
@@ -37,6 +37,7 @@ export const authenticate = async (
 
         next();
     } catch (error) {
+        console.log('authenticate error', error)
         // Catch potential errors during DB lookup or token verification
         next(new AppError('Authentication failed.', 500, false));
     }

@@ -1,0 +1,23 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended" // Make sure this is last
+    ],
+    "plugins": ["@typescript-eslint", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "rules": {
+        "prettier/prettier": "warn",
+        "@typescript-eslint/no-explicit-any": "warn", // Or "off" if needed, but warn is better
+        "@typescript-eslint/explicit-module-boundary-types": "off", // Can be helpful but sometimes verbose
+        "no-console": "warn" // Discourage console.log in production
+    }
+}
