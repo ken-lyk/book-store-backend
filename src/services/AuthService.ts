@@ -35,7 +35,6 @@ export class AuthService {
 
         await this.userRepository.save(newUser);
 
-         
         const { password: _, ...userWithoutPassword } = newUser;
         return userWithoutPassword;
     }
@@ -65,7 +64,6 @@ export class AuthService {
         const tokenPayload: JwtPayload = { id: user.id, role: user.role };
         const token = generateToken(tokenPayload);
 
-         
         const { password: _, ...userWithoutPassword } = user;
         return { user: userWithoutPassword, token };
     }
@@ -75,7 +73,7 @@ export class AuthService {
         if (!user) {
             return null;
         }
-         
+        
         const { password: _, ...userWithoutPassword } = user;
         return userWithoutPassword;
     }

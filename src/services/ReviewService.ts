@@ -23,7 +23,7 @@ export class ReviewService {
 
     async createReview(
         reviewData: CreateReviewInput,
-        authenticatedUser: AuthenticatedUser // Pass authenticated user's ID and Role
+        authenticatedUser: AuthenticatedUser
     ): Promise<Review> {
         const { bookId, rating, comment } = reviewData;
         const userId = authenticatedUser.id;

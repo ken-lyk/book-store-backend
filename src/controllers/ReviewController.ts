@@ -11,10 +11,8 @@ export const createReview = async (
     try {
         // Validation handled by middleware
         if (!req.user) {
-            // Should be caught by `authenticate` middleware, but good practice to check
             return next(new AppError('You must be logged in to create a review', 401));
         }
-        // Pass review data and the authenticated user's info to the service
         const review = await reviewService.createReview(req.body, { id: req.user.id, role: req.user.role });
         res.status(201).json({
             status: 'success',
@@ -39,7 +37,6 @@ export const getAllReviews = async (
             userId: req.query.userId as string | undefined
         };
         const { reviews, total } = await reviewService.getAllReviews(queryParams);
-        // TODO: Add pagination metadata to response if needed (totalPages, currentPage, etc.)
         res.status(200).json({
             status: 'success',
             totalResults: total, // Total number of reviews matching filter
@@ -59,7 +56,7 @@ export const getReviewById = async (
     try {
         // ID validation handled by middleware
         const { id } = req.params;
-        const review = await reviewService.getReviewById(id); // Service loads relations
+        const review = await reviewService.getReviewById(id);
         res.status(200).json({
             status: 'success',
             data: { review },
@@ -80,7 +77,6 @@ export const updateReview = async (
             return next(new AppError('Authentication required.', 401));
         }
         const { id } = req.params;
-        // Pass update data and authenticated user for authorization checks in the service
         const review = await reviewService.updateReview(id, req.body, { id: req.user.id, role: req.user.role });
         res.status(200).json({
             status: 'success',
@@ -102,7 +98,6 @@ export const deleteReview = async (
             return next(new AppError('Authentication required.', 401));
         }
         const { id } = req.params;
-        // Pass review ID and authenticated user for authorization checks in the service
         await reviewService.deleteReview(id, { id: req.user.id, role: req.user.role });
         res.status(204).json({
             status: 'success',

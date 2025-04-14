@@ -62,7 +62,6 @@ export const listReviewsQuerySchema = z.object({
 });
 
 
-// Type definitions (optional)
 export type CreateReviewInput = z.infer<typeof createReviewSchema>['body'];
 export type UpdateReviewInput = z.infer<typeof updateReviewSchema>['body'];
 export type ReviewIdParam = z.infer<typeof reviewIdParamSchema>['params'];

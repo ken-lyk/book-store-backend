@@ -27,9 +27,6 @@ export const createBookSchema = z.object({
                 invalid_type_error: 'Author IDs must be an array of UUID strings',
             })
             .min(1, 'At least one author ID is required'),
-        // Add other fields like description, publicationDate if needed
-        // description: z.string().optional(),
-        // publicationDate: z.coerce.date().optional(), // coerce transforms string to Date
     }),
 });
 
@@ -56,17 +53,14 @@ export const updateBookSchema = z.object({
                 })
                 .min(1, 'At least one author ID is required')
                 .optional(),
-            // description: z.string().optional(),
-            // publicationDate: z.coerce.date().optional().nullable(),
         })
         .strict() // Disallow extra fields
         .refine(
             (data) => Object.keys(data).length > 0,
             'At least one field must be provided for update'
-        ), // Ensure body is not empty
+        ),
 });
 
-// Type definitions (optional)
 export type CreateBookInput = z.infer<typeof createBookSchema>['body'];
 export type UpdateBookInput = z.infer<typeof updateBookSchema>['body'];
 export type BookIdParam = z.infer<typeof bookIdParamSchema>['params'];

@@ -29,9 +29,6 @@ export const login = async (
         // Input validation is handled by middleware
         const { user, token } = await authService.loginUser(req.body);
 
-        // In production, consider setting the JWT in an HttpOnly cookie for better security
-        // res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
-
         res.status(200).json({
             status: 'success',
             token,
@@ -47,9 +44,7 @@ export const getMe = async (
     res: Response,
     next: NextFunction
 ): Promise<void> => {
-    // Authentication middleware (`authenticate`) should have already run and attached `req.user`
     if (!req.user) {
-        // This check is mostly a safeguard; authenticate middleware should handle unauthorized access
         return next(new AppError('Authentication required.', 401));
     }
 

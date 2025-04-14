@@ -12,7 +12,6 @@ export const registerSchema = z.object({
         password: z
             .string({ required_error: 'Password is required' })
             .min(6, 'Password must be at least 6 characters long'),
-        // Role is typically assigned server-side, not accepted from client registration
     }),
 });
 
@@ -24,10 +23,9 @@ export const loginSchema = z.object({
             .email('Invalid email address'),
         password: z
             .string({ required_error: 'Password is required' })
-            .min(1, 'Password cannot be empty'), // Simple presence check for login
+            .min(1, 'Password cannot be empty'),
     }),
 });
 
-// Type definition for convenience (optional)
 export type RegisterInput = z.infer<typeof registerSchema>['body'];
 export type LoginInput = z.infer<typeof loginSchema>['body'];

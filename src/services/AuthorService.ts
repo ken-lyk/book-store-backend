@@ -63,13 +63,6 @@ export class AuthorService {
             );
         }
 
-        // Option 2: Allow deletion (might orphan book entries in junction table if DB FK cascade not set)
-        // No explicit check needed here if you choose this path.
-
-        // Option 3: Manually remove associations (Complex)
-        // Not implemented here for brevity.
-        // --- End Cascade Handling Decision ---
-
         const deleteResult = await this.authorRepository.delete(id);
 
         if (!deleteResult.affected || deleteResult.affected === 0) {

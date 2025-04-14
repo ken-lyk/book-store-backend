@@ -24,7 +24,6 @@ export const getAllBooks = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        // Add pagination/filtering based on req.query if needed
         const books = await bookService.getAllBooks({ relations: ['authors'] }); // Load authors by default
         res.status(200).json({
             status: 'success',
@@ -42,9 +41,7 @@ export const getBookById = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        // ID validation handled by middleware
         const { id } = req.params;
-        // Load authors and reviews for detailed view
         const book = await bookService.getBookById(id, { relations: ['authors', 'reviews', 'reviews.user'] });
         res.status(200).json({
             status: 'success',
@@ -61,7 +58,6 @@ export const updateBook = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        // ID and body validation handled by middleware
         const { id } = req.params;
         const book = await bookService.updateBook(id, req.body);
         res.status(200).json({

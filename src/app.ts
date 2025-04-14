@@ -4,8 +4,8 @@ import cors from 'cors';
 import apiRouter from './routers/index';
 import { errorHandler } from './middlewares/errorHandler';
 import { AppError } from './utils/AppError';
-import swaggerUi from 'swagger-ui-express'; // Import swagger UI
-import swaggerSpec from './config/swagger'; // Import the generated spec
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger';
 
 const app: Application = express();
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 // --- Swagger UI Setup ---
 // Serve Swagger UI documentation at the /api-docs route
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-    // explorer: true, // Optional: Adds a search bar
+    explorer: true, // Optional: Adds a search bar
     // customCss: '.swagger-ui .topbar { display: none }' // Optional: Custom CSS
 }));
 // Serve the raw swagger JSON spec at /api-docs.json
@@ -38,11 +38,11 @@ app.all(/(.*)/, (req: Request, res: Response, next) => {
     if (!req.path.startsWith('/api-docs')) {
         next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
     } else {
-        next(); // Allow swagger-ui-express internal routes to pass
+        next();
     }
 });
 
-// 4. Global Error Handler - Must be the last middleware
+// 4. Global Error Handler
 app.use(errorHandler);
 
 export default app;
