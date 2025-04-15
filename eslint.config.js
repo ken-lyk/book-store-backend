@@ -18,13 +18,8 @@ export default tseslint.config( // Use the tseslint helper for convenience
         ],
     },
 
-    // Base ESLint recommended configuration
     eslint.configs.recommended,
 
-    // TypeScript specific configurations provided by typescript-eslint
-    // This replaces the need for separate parser/plugin setup in the config body
-    // Use recommendedTypeChecked for stricter rules that require type information
-    // Use recommended for basic TS linting without type checking overhead
     // ...tseslint.configs.recommendedTypeChecked, // Use this for stricter checks
     ...tseslint.configs.recommended, // Use this for faster, less strict checks
 
@@ -61,9 +56,5 @@ export default tseslint.config( // Use the tseslint helper for convenience
             // Add any other specific rules you want to enforce or disable
         },
     },
-
-    // Prettier configuration - MUST BE THE LAST ENTRY IN THE ARRAY
-    // This imports eslint-config-prettier and disables any ESLint rules
-    // that might conflict with Prettier's formatting.
     eslintConfigPrettier
 );
