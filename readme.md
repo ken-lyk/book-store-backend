@@ -126,9 +126,9 @@ A RESTful API built with Node.js, Express, TypeScript, TypeORM, and MySQL for ma
 This API uses OpenAPI 3.0 for documentation, served via Swagger UI. The specification is defined in YAML files located in the `/docs` directory, providing a clear separation from the application code.
 
 *   **Access Swagger UI:** Once the server is running, navigate to:
-    `http://localhost:<PORT>/api-docs` (e.g., `http://localhost:3000/api-docs`)
+    `http://localhost:<PORT>/api/v1/api-docs` (e.g., `http://localhost:3000/api/v1/api-docs`)
 *   **Raw OpenAPI Spec:** The fully resolved OpenAPI JSON specification can be accessed at:
-    `http://localhost:<PORT>/api-docs.json`
+    `http://localhost:<PORT>/api/v1/api-docs.json`
 
 The Swagger UI provides:
 *   A list of all available API endpoints.
