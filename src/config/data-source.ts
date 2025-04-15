@@ -13,10 +13,10 @@ export const AppDataSourceOptions: DataSourceOptions = {
     username: config.db.username,
     password: config.db.password,
     database: config.db.database,
-    synchronize: false, // Never use TRUE in production! Use migrations.
-    logging: process.env.NODE_ENV === 'development', // Log SQL in dev
+    synchronize: false,
+    logging: process.env.NODE_ENV === 'development',
     entities: [User, Book, Author, Review],
-    migrations: [__dirname + '/../migrations/*{.ts,.js}'], // Path to migrations
+    migrations: [__dirname + '/../migrations/*{.ts,.js}'],
     subscribers: [],
 };
 

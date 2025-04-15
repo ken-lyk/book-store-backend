@@ -35,9 +35,6 @@ export const validateRequest =
                         message: err.message,
                     }));
 
-                    // Create a custom AppError for consistent error handling
-                    // You could optionally include formattedErrors in the AppError or log them
-                    // For client response, often a generic message is preferred.
                     const validationError = new AppError(
                         'Validation failed. Please check your input.', // User-friendly message
                         400, // Bad Request status code
@@ -58,8 +55,8 @@ export const validateRequest =
                     next(
                         new AppError(
                             'An internal error occurred during request validation.',
-                            500, // Internal Server Error
-                            false // Not an operational error (likely a server-side bug)
+                            500,
+                            false
                         )
                     );
                 }

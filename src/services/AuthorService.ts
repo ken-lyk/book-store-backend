@@ -21,7 +21,6 @@ export class AuthorService {
     }
 
     async getAllAuthors(options?: FindManyOptions<Author>): Promise<Author[]> {
-        // Example: Add default ordering or allow options from controller
         return this.authorRepository.find({ order: { name: 'ASC' }, ...options });
     }
 

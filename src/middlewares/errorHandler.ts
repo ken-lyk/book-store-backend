@@ -25,16 +25,12 @@ export const errorHandler = (
         res.status(409).json({ // 409 Conflict
             status: 'error',
             message: 'Database conflict: A record with this value already exists.',
-            // You might parse the error message for more details if needed
         });
     }
-    // Add more specific error handlers here (e.g., ZodError if not handled in middleware, TypeORM errors)
     else {
-        // Generic Internal Server Error for unexpected issues
         res.status(500).json({
             status: 'error',
             message: 'Internal Server Error',
-            // Avoid leaking sensitive error details in production
             ...(process.env.NODE_ENV === 'development' ? { error: err.toString(), stack: err.stack } : {}),
         });
     }

@@ -9,10 +9,6 @@ export class Author {
     @Column({ length: 150 })
     name!: string;
 
-    // Add other author details like bio, birthdate if needed
-    // @Column({ type: 'text', nullable: true })
-    // bio?: string;
-
     @ManyToMany(() => Book, book => book.authors)
     books!: Book[]; // Relationship managed by Book entity's @JoinTable
 

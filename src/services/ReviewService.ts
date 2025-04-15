@@ -6,7 +6,6 @@ import { AppError } from '../utils/AppError';
 import { CreateReviewInput, UpdateReviewInput, ListReviewsQuery } from '../validators/reviewValidators'; // Assuming types exported
 import { Repository, FindOneOptions, FindOptionsWhere } from 'typeorm';
 
-// Type for authenticated user data passed to service methods
 type AuthenticatedUser = {
     id: string;
     role: UserRole;
@@ -14,7 +13,7 @@ type AuthenticatedUser = {
 
 export class ReviewService {
     private reviewRepository: Repository<Review>;
-    private bookRepository: Repository<Book>; // To check if book exists
+    private bookRepository: Repository<Book>;
 
     constructor() {
         this.reviewRepository = AppDataSource.getRepository(Review);
@@ -49,8 +48,7 @@ export class ReviewService {
         });
 
         await this.reviewRepository.save(review);
-        // Consider loading relations 'user' and 'book' if needed immediately after creation
-        return this.getReviewById(review.id); // Reload to include relations
+        return this.getReviewById(review.id);
     }
 
     async getAllReviews(query: ListReviewsQuery): Promise<{ reviews: Review[], total: number }> {
@@ -64,7 +62,7 @@ export class ReviewService {
 
         const [reviews, total] = await this.reviewRepository.findAndCount({
             where,
-            relations: ['user', 'book'], // Load relations
+            relations: ['user', 'book'],
             order: { createdAt: 'DESC' },
             skip: skip,
             take: limit,

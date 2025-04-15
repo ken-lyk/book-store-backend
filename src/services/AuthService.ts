@@ -21,7 +21,7 @@ export class AuthService {
 
         const existingUser = await this.userRepository.findOneBy({ email });
         if (existingUser) {
-            throw new AppError('Email already in use', 409); // 409 Conflict
+            throw new AppError('Email already in use', 409);
         }
 
         const hashedPassword = await hashPassword(password);
@@ -30,7 +30,7 @@ export class AuthService {
             name,
             email,
             password: hashedPassword,
-            role: UserRole.USER, // Default role for registration
+            role: UserRole.USER,
         });
 
         await this.userRepository.save(newUser);
@@ -44,16 +44,15 @@ export class AuthService {
     ): Promise<{ user: SafeUser; token: string }> {
         const { email, password } = credentials;
 
-        // Find user and explicitly select password for comparison
         const user = await this.userRepository
             .createQueryBuilder('user')
             .where('user.email = :email', { email })
-            .addSelect('user.password') // Make sure password is selected
+            .addSelect('user.password')
             .getOne();
 
 
         if (!user) {
-            throw new AppError('Invalid email or password', 401); // Use generic error for security
+            throw new AppError('Invalid email or password', 401);
         }
 
         const isPasswordValid = await comparePassword(password, user.password);
@@ -79,5 +78,4 @@ export class AuthService {
     }
 }
 
-// Export an instance or use dependency injection framework
 export const authService = new AuthService();

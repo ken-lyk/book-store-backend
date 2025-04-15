@@ -59,8 +59,7 @@ const swaggerDefinition = {
                     email: { type: 'string', format: 'email', example: 'john.doe@example.com' },
                     role: { type: 'string', enum: ['USER', 'ADMIN'], example: 'USER' },
                     createdAt: { type: 'string', format: 'date-time' },
-                    updatedAt: { type: 'string', format: 'date-time' },
-                    // reviews: { type: 'array', items: { $ref: '#/components/schemas/ReviewResponse' } } // Optional, could cause circular refs if not careful
+                    updatedAt: { type: 'string', format: 'date-time' }, 
                 },
             },
             // --- Author Schemas ---
@@ -77,8 +76,7 @@ const swaggerDefinition = {
                     id: { type: 'string', format: 'uuid' },
                     name: { type: 'string', example: 'J.R.R. Tolkien' },
                     createdAt: { type: 'string', format: 'date-time' },
-                    updatedAt: { type: 'string', format: 'date-time' },
-                    // books: { type: 'array', items: { $ref: '#/components/schemas/BookSummary' } } // Avoid full BookResponse to prevent cycles
+                    updatedAt: { type: 'string', format: 'date-time' }, 
                 }
             },
             // --- Book Schemas ---
@@ -163,8 +161,6 @@ const swaggerDefinition = {
                 properties: {
                     status: { type: 'string', example: 'error' },
                     message: { type: 'string', example: 'Resource not found' },
-                    // Optional: add details for validation errors if needed
-                    // errors: { type: 'array', items: { type: 'object' } }
                 }
             }
         },
@@ -190,7 +186,6 @@ const swaggerDefinition = {
 const options: Options = {
     definition: swaggerDefinition,
     // Path to the API specs (route files containing JSDoc comments)
-    // Use glob patterns to scan your route files
     apis: ['src/routers/authorRoutes.ts',
         'src/routers/authRoutes.ts',
         'src/routers/bookRoutes.ts',
@@ -198,7 +193,6 @@ const options: Options = {
     ]
 };
 
-// Initialize swagger-jsdoc -> returns validated swagger spec in JSON format
 const swaggerSpec = swaggerJsdoc(options);
 
 export default swaggerSpec;

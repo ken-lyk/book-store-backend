@@ -9,7 +9,6 @@ import { User } from 'entities/User';
 export class BookService {
     private bookRepository: Repository<Book>;
     private authorRepository: Repository<Author>;
-    // private reviewRepository: Repository<Review>; // Only needed if manually handling review cascade
 
     constructor() {
         this.bookRepository = AppDataSource.getRepository(Book);
@@ -43,9 +42,8 @@ export class BookService {
     }
 
     async getAllBooks(options?: FindManyOptions<Book>): Promise<Book[]> {
-        // Eager load authors and optionally reviews. Paginate in controller if needed.
         return this.bookRepository.find({
-            relations: ['authors', 'reviews'], // Adjust relations as needed
+            relations: ['authors', 'reviews'],
             order: { title: 'ASC' },
             ...options
         });
@@ -54,7 +52,7 @@ export class BookService {
     async getBookById(id: string, options?: FindOneOptions<Book>): Promise<Book> {
         const book = await this.bookRepository.findOne({
             where: { id },
-            relations: ['authors', 'reviews', 'reviews.user'], // Load nested user data for reviews
+            relations: ['authors', 'reviews', 'reviews.user'],
             ...options
         });
 
@@ -76,14 +74,11 @@ export class BookService {
     }
 
     async updateBook(id: string, updateData: UpdateBookInput): Promise<Book> {
-        // Use getBookById to ensure it exists first (includes 404 check)
-        // Load existing authors to handle potential changes
         const book = await this.getBookById(id, { relations: ['authors'] });
         const { authorIds, ...restUpdateData } = updateData;
 
         let authorsToAssign: Author[] | undefined = undefined;
 
-        // Handle author updates if authorIds are provided
         if (authorIds) {
             authorsToAssign = await this.authorRepository.findBy({ id: In(authorIds) });
             if (authorsToAssign.length !== authorIds.length) {
@@ -93,40 +88,26 @@ export class BookService {
             }
         }
 
-        // Merge the simple fields first
         this.bookRepository.merge(book, {
             isbn : restUpdateData.isbn ?? '',
             title: restUpdateData.title ?? ''
         });
 
-        // If new authors were fetched, assign them to the book entity
-        // This overwrites the existing authors association for this book
         if (authorsToAssign !== undefined) {
             book.authors = authorsToAssign;
         }
 
-        // Save the book (TypeORM handles junction table updates)
         await this.bookRepository.save(book);
-
-        // Return the updated book, potentially reloading all relations for consistency
-        // return this.getBookById(id); // Reload to get fresh state with all relations
-        return book; // Or return the modified instance directly
+        return book;
     }
 
     async deleteBook(id: string): Promise<void> {
-        // Check if book exists
         const book = await this.bookRepository.findOneBy({ id });
         if (!book) {
             throw new AppError('Book not found', 404);
         }
 
-        // Cascade Handling:
-        // - Reviews: Handled by `onDelete: 'CASCADE'` in Review entity's relation. DB constraint needed.
-        // - Authors: The relationship is ManyToMany. Deleting the book automatically removes
-        //            entries from the junction table (`book_authors`). No extra action needed here.
-
         const deleteResult = await this.bookRepository.delete(id);
-
         if (!deleteResult.affected || deleteResult.affected === 0) {
             throw new AppError('Book not found or could not be deleted', 404);
         }

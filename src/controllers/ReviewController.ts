@@ -39,8 +39,8 @@ export const getAllReviews = async (
         const { reviews, total } = await reviewService.getAllReviews(queryParams);
         res.status(200).json({
             status: 'success',
-            totalResults: total, // Total number of reviews matching filter
-            results: reviews.length, // Number of results in this page
+            totalResults: total,
+            results: reviews.length,
             data: { reviews },
         });
     } catch (error) {

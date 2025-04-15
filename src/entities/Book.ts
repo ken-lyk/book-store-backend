@@ -13,12 +13,6 @@ export class Book {
     @Column({ length: 20, nullable: true, unique: true }) // ISBN can be optional/unique
     isbn?: string;
 
-    // Add other book details like publication date, description
-    // @Column({ type: 'text', nullable: true })
-    // description?: string;
-    // @Column({ type: 'date', nullable: true })
-    // publicationDate?: Date;
-
     @ManyToMany(() => Author, author => author.books, { cascade: ['insert', 'update'] }) // Cascade only insert/update, handle delete manually or configure DB cascade
     @JoinTable({ // Join table definition is usually on one side of ManyToMany
         name: 'book_authors', // name of the junction table

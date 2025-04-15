@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { Review } from './Review';
-import { IsEmail, MinLength } from 'class-validator'; // TypeORM can integrate class-validator
+import { IsEmail, MinLength } from 'class-validator';
 
 export enum UserRole {
     USER = 'USER',
